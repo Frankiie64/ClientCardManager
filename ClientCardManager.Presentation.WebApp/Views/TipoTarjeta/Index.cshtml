@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Tipo Tarjeta";
+}
+<div class="container-fluid mt-md-5">
+    <div id="TopDivTable" class="col-md-6">
+        <a id="btnCrear" type="button" class="btn btn-success"><i class="fa-solid fa-credit-card"></i> Nueva Tarjeta</a>
+    </div>
+    <table id="tablaTipoTarjeta" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+        <thead class="main-table">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Tarjetas</th>
+                <th>Último Registro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+<div id="modalTarjeta">
+
+</div>
+
+
+@section Scripts {
+   <script src="~/js/TipoTarjeta/Index.js"></script>
+}

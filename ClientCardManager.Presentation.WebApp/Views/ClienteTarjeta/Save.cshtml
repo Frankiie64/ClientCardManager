@@ -1,0 +1,74 @@
+﻿@model CientCardManager.Core.Application.ViewModels.ClienteTarjeta.SaveClienteTarjetaVM;
+
+@{
+    Layout = null;
+    bool editMode = Model.Id != 0;
+}
+
+<div class="modal fade clienteTarjetaModal" id="ClienteTarjetaModal" tabindex="-1" role="dialog" aria-labelledby="ClienteTarjetaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearClienteTarjetaModalLabel">@(editMode ? "Editar" : "Nueva") Tarjeta <i class="fa-regular fa-id-card"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>                
+            </div>
+            <form class="formClienteTarjeta" method="post" asp-action="@(editMode? "Editar":"Crear")" asp-controller="ClienteTarjeta">
+                <div class="modal-body">
+                    <div class="container">
+                            <input hidden id="txtId" asp-for="Id" type="number" value="@Model.Id" />
+                            <div class="row justify-content-start">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtNombre">Cliente</label>
+                                        <input readonly asp-for="NombreCliente" class="form-control" style="background-color:lightgray" value="@Model.NombreCliente" />
+                                        <input hidden type="number" class="form-control" id="txtNombre" asp-for="IdCliente" value="@Model.IdCliente">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtNombre">Banco</label>                                        
+                                        <input placeholder="Banco de Reservas" type="text" class="form-control" id="txtBanco" asp-for="Banco" value="@Model.Banco">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="selectTarjeta">Tipo de Tarjeta</label>
+                                    <select class="select2 form-control selectTarjeta select2" asp-for="IdTipoTarjeta" asp-items="ViewBag.TipoTarjeta"></select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                    <label class="form-label" for="txtNumero">Número de Tarjeta</label>
+                                    <input placeholder="0000-0000-0000-0000" type="text" class="form-control numero-tarjeta" id="txtNumero" asp-for="Numero" value="@Model.Numero">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtAnioVencimiento">Año</label>                                        
+                                        <input min="1901" type="number" class="form-control" id="txtAnioVencimiento" asp-for="AnioVencimiento" value="@Model.AnioVencimiento">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="mb-3">
+                                    <label class="form-label" for="txtMesVencimiento">Mes</label>
+                                    <input type="number" min="1" max="12" class="form-control" id="txtMesVencimiento" asp-for="MesVencimiento" value="@Model.MesVencimiento">
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-primary ">
+                        <i class="fa-solid fa-check"></i>
+                         @(editMode ? "Actualizar" : "Agregar")                        
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/ClienteTarjeta/Save.js"></script>
+
+

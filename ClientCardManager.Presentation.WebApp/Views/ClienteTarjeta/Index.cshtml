@@ -1,0 +1,36 @@
+﻿@model CientCardManager.Core.Application.ViewModels.ClienteTarjeta.ClienteTarjetaVM;
+@{
+    ViewData["Title"] = "Asociación Tarjetas";
+}
+<div id="container" class="container-fluid mt-md-5">    
+    
+    <table id="tablaClienteTarjeta" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+        <thead class="main-table">
+            <tr>
+                <th>Cliente</th>
+                <th>Tipo Tarjeta</th>
+                <th>Número de Tarjeta</th>
+                <th>Banco</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+<div class="col-md-3 TopDivTable">
+    <a id="btnCrear" type="button" class="btn btn-success"><i class="fa-regular fa-id-card"></i> Asociar Tarjeta</a>
+</div>
+
+<div class="col-md-3 mt-2 TopMidDivTable">
+    <select id="selectCliente" class="form-control select2 selectCliente" asp-items="ViewBag.Clientes" asp-for="IdCliente">
+        
+    </select>
+</div>
+<div id="modalClienteTarjeta">
+
+</div>
+
+
+@section Scripts {
+   <script src="~/js/ClienteTarjeta/Index.js"></script>
+}

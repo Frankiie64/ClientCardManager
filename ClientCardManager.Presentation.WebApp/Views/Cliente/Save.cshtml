@@ -1,0 +1,61 @@
+﻿@model CientCardManager.Core.Application.ViewModels.Cliente.SaveClienteVM;
+
+@{
+    Layout = null;
+    bool editMode = Model.Id != 0;
+}
+
+<div class="modal fade" id="ClienteModal" tabindex="-1" role="dialog" aria-labelledby="ClienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearClienteModalLabel">@(editMode? "Editar" : "Crear") Cliente <i class="fa-solid fa-address-card"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>                
+            </div>
+            <form class="formCliente" method="post" asp-action="@(editMode? "Editar":"Crear")" asp-controller="Cliente">
+                <div class="modal-body">
+                    <div class="container">
+                            <input hidden id="txtId" asp-for="Id" type="number" value="@Model.Id" />
+                            <div class="row justify-content-start">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtNombre">Nombre</label>
+                                        <input placeholder="frank" type="text" class="form-control" id="txtNombre" asp-for="Nombre" value="@Model.Nombre">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtApellido">Apellido</label>
+                                        <input placeholder="brea" type="text" class="form-control" id="txtApellido" asp-for="Apellido" value="@Model.Apellido">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtTelefono">Teléfono</label>
+                                          <input placeholder="000-000-0000" type="text" class="form-control telefono" id="txtTelefono" asp-for="Telefono" value="@Model.Telefono">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="txtTelefono">Ocupación</label>
+                                        <input placeholder="contable" type="text" class="form-control" id="txtOcupacion" asp-for="Ocupacion" value="@Model.Ocupacion">
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-primary ">
+                        <i class="fa-solid fa-check"></i>
+                         @(editMode ? "Actualizar" : "Agregar")                        
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Cliente/Save.js"></script>
+
+
