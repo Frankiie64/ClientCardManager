@@ -160,6 +160,19 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 }
 
                 request.Nombre = request.Nombre.ToUpper();
+
+                if (!await _service.Exists(x => x.Id == request.Id))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error esta tipo tarjeta no existe",
+                        msj = "Tipo de tarjeta es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
                 bool result = await _service.Update(request);
 
                 if (!result)

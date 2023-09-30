@@ -218,6 +218,19 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
 
                 if (!string.IsNullOrWhiteSpace(request.Ocupacion))                
                     request.Ocupacion = request.Ocupacion.ToUpper();
+
+
+                if (!await _service.Exists(x=>x.Id == request.Id))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente no existe",
+                        msj = "El cliente es inválido.",
+                    };
+
+                    return Json(error);
+                }
                 
 
                 bool result = await _service.Update(request);

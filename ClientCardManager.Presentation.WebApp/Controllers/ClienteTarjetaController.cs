@@ -114,6 +114,32 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     }
                 }
 
+                if (string.IsNullOrWhiteSpace(request.Banco))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error banco esta vacio.",
+                        msj = "El campo banco no es válido.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Numero))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error número esta vacio.",
+                        msj = "El campo número no es válido.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
                 request.Banco = request.Banco.ToUpper();
 
                 if (!Regex.IsMatch(request.Numero, @"^\d{4}-\d{4}-\d{4}-\d{4}$"))
@@ -169,6 +195,31 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+                if (!await _serviceCliente.Exists(x => x.Id == request.IdCliente))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente no existe",
+                        msj = "El cliente es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (!await _serviceTipoTarjeta.Exists(x => x.Id == request.IdTipoTarjeta))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este tipo de tarjeta no existe",
+                        msj = "Tipo tarjeta es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+
                 bool result = await _service.Add(request);
 
                 if (!result)
@@ -209,7 +260,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(SaveClienteTarjetaVM request)
+        public async Task<JsonResult> Editar(SaveClienteTarjetaVM request)
         {
             try
             {
@@ -241,6 +292,32 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                             return Json(error);
                         }
                     }
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Banco))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error banco esta vacio.",
+                        msj = "El campo banco no es válido.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Numero))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error número esta vacio.",
+                        msj = "El campo número no es válido.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
                 }
 
                 request.Banco = request.Banco.ToUpper();
@@ -294,6 +371,42 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         titulo = "Error",
                         msj = "Este número de tarjeta ya existe.",
                         idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
+                if (!await _serviceCliente.Exists(x => x.Id == request.Id))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente no existe",
+                        msj = "El cliente es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (!await _serviceTipoTarjeta.Exists(x => x.Id == request.IdTipoTarjeta))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este tipo de tarjeta no existe",
+                        msj = "Tipo tarjeta es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (!await _service.Exists(x => x.Id == request.Id))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error esta asociacón de tarjeta no existe",
+                        msj = "Asociacón de tarjeta no existe.",
                     };
 
                     return Json(error);

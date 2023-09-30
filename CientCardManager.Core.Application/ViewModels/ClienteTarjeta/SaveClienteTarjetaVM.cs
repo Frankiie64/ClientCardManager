@@ -10,9 +10,9 @@ namespace CientCardManager.Core.Application.ViewModels.ClienteTarjeta
         [Required(ErrorMessage = "Es obligatorio seleccionar el cliente a quien le pertenece esta tarjeta.")]
         public int IdCliente { get; set; }
         [Required(ErrorMessage = "El campo banco es obligatorio.")]
-        public string Banco { get; set; }
+        public string? Banco { get; set; }
         [Required(ErrorMessage = "El campo numero es obligatorio")]
-        public string Numero { get; set; }
+        public string? Numero { get; set; }
         [Required(ErrorMessage = "El campo mes vencimiento es obligatorio")]
         public int MesVencimiento { get; set; }
         [Required(ErrorMessage = "El campo año vencimiento es obligatorio")]

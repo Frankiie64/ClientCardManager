@@ -2,10 +2,13 @@
 using CientCardManager.Core.Application.ViewModels.Cliente;
 using CientCardManager.Core.Application.ViewModels.TipoTarjeta;
 using ClientCardManager.Core.Domain.Entidad;
+using ClientCardManager.Infrastructure.Persistence.Context;
 using ClientCardManager.Presentation.WebApp.Controllers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ClientCardManager.Test.WebApp.PresentationTests
 {
@@ -13,13 +16,25 @@ namespace ClientCardManager.Test.WebApp.PresentationTests
     public class TipoTarjetaTest
     {
         protected TestServer server;
+        private ApplicationDbContext _context;
         public IServicioGenerico<SaveTipoTarjetaVM, TipoTarjetaVM, TipoTarjeta> _service;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void SetUp()
         {
             this.server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             _service = server.Host.Services.GetRequiredService<IServicioGenerico<SaveTipoTarjetaVM, TipoTarjetaVM, TipoTarjeta>>();
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+             .UseInMemoryDatabase(databaseName: "ConnectionTest")
+             .Options;
+
+            _context = new ApplicationDbContext(options);
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            _context.Dispose();
         }
         [Order(0)]
         [Test]

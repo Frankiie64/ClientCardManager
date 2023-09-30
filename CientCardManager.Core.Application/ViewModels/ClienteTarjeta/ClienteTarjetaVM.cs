@@ -10,8 +10,8 @@ namespace CientCardManager.Core.Application.ViewModels.ClienteTarjeta
         public TipoTarjetaVM Tarjeta { get; set; }
         public int IdCliente { get; set; }
         public ClienteVM Cliente { get; set; }
-        public string Banco { get; set; }
-        public string Numero { get; set; }
+        public string? Banco { get; set; }
+        public string? Numero { get; set; }
         public int MesVencimiento { get; set; }
         public int AnioVencimiento { get; set; }
     }
