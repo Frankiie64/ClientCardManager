@@ -63,6 +63,30 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     }
                 }
 
+                if (string.IsNullOrWhiteSpace(request.Nombre))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Apellido))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Apellido",
+                        msj = "El campo Apellido es inválido.",
+                    };
+
+                    return Json(error);
+                }
+              
                 if (!Regex.IsMatch(request.Telefono, @"^\d{3}-\d{3}-\d{4}$"))
                 {
                     var error = new
@@ -77,7 +101,9 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
 
                 request.Nombre = request.Nombre.ToUpper();
                 request.Apellido = request.Apellido.ToUpper();
-                request.Ocupacion = request.Ocupacion.ToUpper();  
+
+                if (!string.IsNullOrWhiteSpace(request.Ocupacion))                
+                    request.Ocupacion = request.Ocupacion.ToUpper();
                 
                 bool result = await _service.Add(request);
 
@@ -116,7 +142,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(SaveClienteVM request)
+        public async Task<JsonResult> Editar(SaveClienteVM request)
         {            
             try
             {
@@ -149,6 +175,32 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     }
                 }
 
+                if (string.IsNullOrWhiteSpace(request.Nombre))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Apellido))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Apellido",
+                        msj = "El campo Apellido es inválido.",
+                    };
+
+                    return Json(error);
+                }
+
+               
+
                 if (!Regex.IsMatch(request.Telefono, @"^\d{3}-\d{3}-\d{4}$"))
                 {
                     var error = new
@@ -163,7 +215,10 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
 
                 request.Nombre = request.Nombre.ToUpper();
                 request.Apellido = request.Apellido.ToUpper();
-                request.Ocupacion = request.Ocupacion.ToUpper();
+
+                if (!string.IsNullOrWhiteSpace(request.Ocupacion))                
+                    request.Ocupacion = request.Ocupacion.ToUpper();
+                
 
                 bool result = await _service.Update(request);
 
@@ -210,7 +265,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 x.Nombre,
                 x.Apellido,
                 x.Telefono,
-                x.Ocupacion,
+                ocupacion = string.IsNullOrWhiteSpace(x.Ocupacion) ? "NO" : x.Ocupacion,
                 tarjetas = x.Tarjetas.Count()
             }).ToList();
           

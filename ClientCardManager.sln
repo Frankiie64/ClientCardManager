@@ -11,13 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{50E95C2C-53E8-4F5F-89C6-0BB1DB25EDDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCardManager.Core.Domain", "ClientCardManager.Core.Domain\ClientCardManager.Core.Domain.csproj", "{1AFE3D06-A33C-484E-A6A2-E507A01E2EF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCardManager.Core.Domain", "ClientCardManager.Core.Domain\ClientCardManager.Core.Domain.csproj", "{1AFE3D06-A33C-484E-A6A2-E507A01E2EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCardManager.Infrastructure.Persistence", "ClientCardManager.Infrastructure.Persistence\ClientCardManager.Infrastructure.Persistence.csproj", "{920D8982-6E95-42BA-8C7F-A2A412BB9E2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCardManager.Infrastructure.Persistence", "ClientCardManager.Infrastructure.Persistence\ClientCardManager.Infrastructure.Persistence.csproj", "{920D8982-6E95-42BA-8C7F-A2A412BB9E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CientCardManager.Core.Application", "CientCardManager.Core.Application\CientCardManager.Core.Application.csproj", "{1522E0B3-BF36-44DD-A3AC-1D81A4B28E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CientCardManager.Core.Application", "CientCardManager.Core.Application\CientCardManager.Core.Application.csproj", "{1522E0B3-BF36-44DD-A3AC-1D81A4B28E4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCardManager.Presentation.WebApp", "ClientCardManager.Presentation.WebApp\ClientCardManager.Presentation.WebApp.csproj", "{C3F0CC2C-44B6-48AA-940C-0F55F0178273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCardManager.Presentation.WebApp", "ClientCardManager.Presentation.WebApp\ClientCardManager.Presentation.WebApp.csproj", "{C3F0CC2C-44B6-48AA-940C-0F55F0178273}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{15B7DA14-7EBB-4E8B-A939-9C0AB3EF9B4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientCardManager.Test.WebApp", "ClientCardManager.Test.WebApp\ClientCardManager.Test.WebApp.csproj", "{9E521938-DDE7-4EBE-BB4B-90DA44689A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{C3F0CC2C-44B6-48AA-940C-0F55F0178273}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3F0CC2C-44B6-48AA-940C-0F55F0178273}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3F0CC2C-44B6-48AA-940C-0F55F0178273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E521938-DDE7-4EBE-BB4B-90DA44689A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E521938-DDE7-4EBE-BB4B-90DA44689A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E521938-DDE7-4EBE-BB4B-90DA44689A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E521938-DDE7-4EBE-BB4B-90DA44689A2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,8 @@ Global
 		{920D8982-6E95-42BA-8C7F-A2A412BB9E2F} = {93700C7F-9839-41AD-8695-01FE29E0EDC2}
 		{1522E0B3-BF36-44DD-A3AC-1D81A4B28E4D} = {8D8BCB5E-6CC0-4052-A2FB-74992AE24B2A}
 		{C3F0CC2C-44B6-48AA-940C-0F55F0178273} = {50E95C2C-53E8-4F5F-89C6-0BB1DB25EDDD}
+		{15B7DA14-7EBB-4E8B-A939-9C0AB3EF9B4D} = {E0E01B04-F48B-4B58-AF6C-A5DCD45891B9}
+		{9E521938-DDE7-4EBE-BB4B-90DA44689A2A} = {15B7DA14-7EBB-4E8B-A939-9C0AB3EF9B4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6736DAEF-A0C0-48F6-9097-543D28DF4548}

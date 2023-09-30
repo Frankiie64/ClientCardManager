@@ -74,7 +74,7 @@ namespace ClientCardManager.Infrastructure.Persistence.Context
                 e.Property(p => p.Nombre).IsRequired().HasMaxLength(150);
                 e.Property(p => p.Apellido).IsRequired().HasMaxLength(150);
                 e.Property(p => p.Telefono).IsRequired().HasMaxLength(50);
-                e.Property(p => p.Ocupacion).IsRequired().HasMaxLength(150);
+                e.Property(p => p.Ocupacion).IsRequired(false).HasMaxLength(150);
                 e.Property(p => p.UltimaModificacion).IsRequired(false);
 
             });

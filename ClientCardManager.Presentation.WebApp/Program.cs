@@ -1,5 +1,10 @@
 using CientCardManager.Core.Application;
+using CientCardManager.Core.Application.Interfaces.Servicios;
+using CientCardManager.Core.Application.ViewModels.TipoTarjeta;
+using ClientCardManager.Core.Domain.Entidad;
 using ClientCardManager.Infrastructure.Persistence;
+using ClientCardManager.Presentation.WebApp.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AgregarCapaPersisntencia(builder.Configuration);
@@ -19,6 +24,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.Services.cargarTarjetas();
 
 app.UseRouting();
 
@@ -29,3 +35,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+

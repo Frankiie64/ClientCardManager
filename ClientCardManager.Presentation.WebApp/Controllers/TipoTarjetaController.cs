@@ -62,8 +62,19 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     }
                 }
 
-                request.Nombre = request.Nombre.ToUpper();
+                if (string.IsNullOrWhiteSpace(request.Nombre))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Campo invalido",
+                        msj = "El campo Nombre es invalido",
+                    };
 
+                    return Json(error);
+                }
+
+                request.Nombre = request.Nombre.ToUpper();
 
                 bool result = await _service.Add(request);
 
@@ -102,7 +113,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(SaveTipoTarjetaVM request)
+        public async Task<JsonResult> Editar(SaveTipoTarjetaVM request)
         {
             try
             {
@@ -135,8 +146,20 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     }
                 }
 
-                request.Nombre = request.Nombre.ToUpper();
 
+                if (string.IsNullOrWhiteSpace(request.Nombre))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Campo invalido",
+                        msj = "El campo Nombre es invalido",
+                    };
+
+                    return Json(error);
+                }
+
+                request.Nombre = request.Nombre.ToUpper();
                 bool result = await _service.Update(request);
 
                 if (!result)

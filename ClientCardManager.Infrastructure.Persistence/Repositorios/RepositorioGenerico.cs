@@ -77,12 +77,12 @@ namespace ClientCardManager.Infrastructure.Persistence.Repositorios
 
             if (predicate != null)
             {
-                query.Where(predicate);
+               query =  query.Where(predicate);
             }
 
             if (include != null)
             {
-                query.Include(include);
+             query = query.Include(include);
             }
 
             return await query.FirstOrDefaultAsync();
@@ -124,7 +124,15 @@ namespace ClientCardManager.Infrastructure.Persistence.Repositorios
         }
         private async Task<bool> CommitChanges()
         {
-            return await _db.SaveChangesAsync() >= 0;
+            try
+            {
+                return await _db.SaveChangesAsync() >= 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
 
