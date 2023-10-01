@@ -94,6 +94,7 @@
     $("#tablaClienteTarjeta").on("click", ".btnEditar", function (e) {
 
         let id = $("#selectCliente").val();
+        let idTarjeta = $(this).attr("asp-data-id");
 
         $.ajax({
             url: finder.getAppFile("cliente/ValidarEstado/" + id),
@@ -113,7 +114,7 @@
                     return;
                 }
 
-                $("#modalClienteTarjeta").load("/ClienteTarjeta/Editar/" + $(this).attr("asp-data-id"), function () {
+                $("#modalClienteTarjeta").load("/ClienteTarjeta/Editar/" + idTarjeta, function () {
                     $("#ClienteTarjetaModal").modal("show");
                 });
 
