@@ -140,6 +140,58 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 return Json(error);
             }
         }
+        [HttpGet]
+        public async Task<JsonResult> ValidarEstado(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Cliente no existe",
+                        msj = "Por favor, ponerse en contacto con soporte tecnico.",
+                    };
+
+                    return Json(error);
+                }
+
+                var result = await _service.Exists(x => x.Id == id && x.Activo == true);
+
+                if (!result)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Cliente inactivo",
+                        msj = "Debe de activar al cliente para poder realizar cambios.",
+                    };
+
+                    return Json(error);
+                }
+
+                var response = new
+                {
+                    ok = true,
+                    titulo = "Correcto!!",
+                    msj = "Todo ha salido correcto.",
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new
+                {
+                    ok = false,
+                    titulo = "Error del servidor",
+                    msj = $"{ex.InnerException.Message}",
+                };
+
+                return Json(error);
+            }
+        }
 
         [HttpPost]
         public async Task<JsonResult> Editar(SaveClienteVM request)
@@ -231,7 +283,18 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
 
                     return Json(error);
                 }
-                
+
+                if (await _service.Exists(x => x.Id == request.Id && x.Activo == false))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente esta incativo",
+                        msj = "El cliente no puede ser actualizado, mientra este inactivo.",
+                    };
+
+                    return Json(error);
+                }
 
                 bool result = await _service.Update(request);
 
@@ -268,6 +331,63 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 return Json(error);
             }
         }
+        [HttpPost]
+        public async Task<JsonResult> ActiveCliente(int id)
+        {
+            try
+            {
+                if (!await _service.Exists(x=>x.Id == id))
+                {
+                    var error = new
+                    {
+                        ok = true,
+                        titulo = "Error del servidor",
+                        msj = "El cliente no existe",
+                    };
+
+                    return Json(error);
+                }
+
+                var model = await _service.GetByIdSv(id);
+
+                model.Activo = !model.Activo;
+
+                bool result = await _service.Update(model);
+
+                if (!result)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error del servidor",
+                        msj = "Por favor, ponerse en contacto con soporte tecnico.",
+                    };
+
+                    return Json(error);
+                }
+
+                var response = new
+                {
+                    ok = true,
+                    titulo = "Correcto!!",
+                    msj = "Todo ha salido correcto.",
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                var error = new
+                {
+                    ok = false,
+                    titulo = "Error del servidor",
+                    msj = $"{ex.InnerException.Message}",
+                };
+                return Json(error);
+            }
+        }
+
+        [HttpGet]
         public async Task<JsonResult> ObtenerClientes()
         {
             var result = await _service.GetList(null,x=>x.Include(y=>y.Tarjetas));
@@ -278,6 +398,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 x.Nombre,
                 x.Apellido,
                 x.Telefono,
+                x.Activo,
                 ocupacion = string.IsNullOrWhiteSpace(x.Ocupacion) ? "NO" : x.Ocupacion,
                 tarjetas = x.Tarjetas.Count()
             }).ToList();

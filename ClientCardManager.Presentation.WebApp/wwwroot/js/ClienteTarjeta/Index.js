@@ -36,16 +36,115 @@
 
             return;
         }
-        $("#modalClienteTarjeta").load("/ClienteTarjeta/Crear/" + id, function () {
-            $("#ClienteTarjetaModal").modal("show");           
+
+        $.ajax({
+            url: finder.getAppFile("cliente/ValidarEstado/" + id ),
+            type: "GET",
+            success: function (response) {
+
+                if (!response.ok) {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: response.titulo,
+                        text: response.msj,
+                        showConfirmButton: true,
+                        timer: 5000,
+
+                    });
+                    return;
+                }
+
+                $("#modalClienteTarjeta").load("/ClienteTarjeta/Crear/" + id, function () {
+                    $("#ClienteTarjetaModal").modal("show");
+                });
+               
+            },
+            error: function (error) {
+                console.error(error);
+                submitButton.find("div").remove();
+                submitButton.prepend("<i>");
+                submitButton.find("i").addClass(i);
+
+                Command: toastr['error'](`POR FAVOR PONERSE EN CONTACTO CON EL TECNICO.`, `ERROR INTERNO`)
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            }
         });
+
+       
     });
 
 
     $("#tablaClienteTarjeta").on("click", ".btnEditar", function (e) {
-        $("#modalClienteTarjeta").load("/ClienteTarjeta/Editar/" + $(this).attr("asp-data-id"), function () {
-            $("#ClienteTarjetaModal").modal("show");
+
+        let id = $("#selectCliente").val();
+
+        $.ajax({
+            url: finder.getAppFile("cliente/ValidarEstado/" + id),
+            type: "GET",
+            success: function (response) {
+
+                if (!response.ok) {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: response.titulo,
+                        text: response.msj,
+                        showConfirmButton: true,
+                        timer: 5000,
+
+                    });
+                    return;
+                }
+
+                $("#modalClienteTarjeta").load("/ClienteTarjeta/Editar/" + $(this).attr("asp-data-id"), function () {
+                    $("#ClienteTarjetaModal").modal("show");
+                });
+
+            },
+            error: function (error) {
+                console.error(error);
+                submitButton.find("div").remove();
+                submitButton.prepend("<i>");
+                submitButton.find("i").addClass(i);
+
+                Command: toastr['error'](`POR FAVOR PONERSE EN CONTACTO CON EL TECNICO.`, `ERROR INTERNO`)
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            }
         });
+       
     });
 
     $("#selectCliente").on("change", function (e) {

@@ -15,10 +15,152 @@
     });
 
     $("#tablaCliente").on("click", ".btnEditar", function (e) {
-        $("#modal").load("/Cliente/Editar/" + $(this).attr("asp-data-id"), function () {
-            $("#ClienteModal").modal("show");
+
+        $.ajax({
+            url: finder.getAppFile("cliente/ValidarEstado/" + $(this).attr("asp-data-id")),
+            type: "GET",
+            success: function (response) {
+
+                if (!response.ok) {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: response.titulo,
+                        text: response.msj,
+                        showConfirmButton: true,
+                        timer: 5000,
+
+                    });
+                    return;
+                }
+
+                $("#modal").load("/Cliente/Editar/" + $(this).attr("asp-data-id"), function () {
+                    $("#ClienteModal").modal("show");
+                });
+
+            },
+            error: function (error) {
+                console.error(error);
+                submitButton.find("div").remove();
+                submitButton.prepend("<i>");
+                submitButton.find("i").addClass(i);
+
+                Command: toastr['error'](`POR FAVOR PONERSE EN CONTACTO CON EL TECNICO.`, `ERROR INTERNO`)
+
+                toastr.options = {
+                    "closeButton": false,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            }
         });
+        
     });
+
+    $("#tablaCliente").on("click",".btnActive", function (e) {
+
+        e.preventDefault();
+
+        const id = $(this).attr("asp-data-id");
+
+        Swal.fire({
+            title: 'Atención!!',
+            text: `¿Estas seguro de realizar esta acción?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+        }).then((result) => {
+
+            if (!result.value) {
+                return;
+            }
+
+            $.ajax({
+                url: finder.getAppFile("Cliente/ActiveCliente/" + id ),
+                type: "POST",                
+                success: function (response) {
+
+                    if (!response.ok) {
+
+                        Command: toastr['error'](`${response.msj}`, `${response.titulo}`)
+
+                        toastr.options = {
+                            "closeButton": false,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": true,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        return;
+                    }
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.titulo,
+                        text: response.msj,
+                        showConfirmButton: true,
+                        timer: 1800,
+                        onClose: function () {
+                            $(location).attr('href', finder.getAppFile('Cliente/Index'));
+
+                        }
+                    }).then(() => {
+                        $(location).attr('href', finder.getAppFile('Cliente/Index'));
+                    });
+
+
+                },
+                error: function (error) {
+                    console.error(error);
+
+                    Command: toastr['error'](`${response.titulo}`, `${response.msj}`)
+
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                }
+            });
+
+        })
+
+    });
+
 
     $("#tablaCliente").on("click", ".btnAsociarTarjeta", function (e) {
 
@@ -114,20 +256,70 @@
                 { "data": "nombre", },
                 { "data": "apellido", },
                 { "data": "telefono", },
-                { "data": "ocupacion", },      
+                { "data": "ocupacion", },  
+                {
+                    "data": "activo",
+                    render: function (data, type, row, meta) {
+
+                        return row['activo']? "Habilitado":"Inactivo"
+                    },
+                },
                 { "data": "tarjetas"},
                 {
                     data: "id",                    
                     render: function (data, type, row, meta) {
 
                         let estructura = `<div class='row justify-content-evenly'>
-                <button  title="Editar Cliente" type="button" class="btn btn-warning text-light col-4 btnEditar" asp-data-id="${row['id']}" ><i class="fa-solid fa-pencil"></i></button>
-                <a " title="Agregar Tarjeta" type="button" class="btn btn-info text-light col-4 btnAsociarTarjeta" asp-data-id="${row['id']}"><i class="fa-solid fa-credit-card"></i></a>
-</div>`;
+<button  title="Editar Cliente" type="button" class="btn btn-warning text-light col-2 btnEditar" asp-data-id="${row['id']}" ><i class="fa-solid fa-pencil"></i></button>
+<a " title="Agregar Tarjeta" type="button" class="btn btn-info text-light col-2 btnAsociarTarjeta" asp-data-id="${row['id']}"><i class="fa-solid fa-credit-card"></i></a>
+`;
+
+                        if (row['activo']) {
+                            estructura += ` 
+<button  title="Inactivar Cliente" type="button" class="btn btn-danger text-light col-2 btnActive" asp-data-id="${row['id']}" ><i class="fa-regular fa-circle-xmark"></i></button>
+`
+                        } else {
+                            estructura += `
+<button  title="Activar Cliente" type="button" class="btn btn-success text-light col-2 btnActive" asp-data-id="${row['id']}" ><i class="fa-solid fa-check"></i></button>
+`
+                        }
+
+                        estructura += `
+</div>`
                         return estructura;                      
                     }
                 }                
             ],           
+            "columnDefs": [
+                {
+                    "targets": 0, 
+                    "width": "15%",
+                },
+                {
+                    "targets": 1, 
+                    "width": "15%",
+                },
+                {
+                    "targets": 2,
+                    "width": "10%",
+                },
+                {
+                    "targets": 3,
+                    "width": "20%",
+                },
+                {
+                    "targets": 4,
+                    "width": "10%",
+                },
+                {
+                    "targets": 5,
+                    "width": "10%",
+                },
+                {
+                    "targets": 6,
+                    "width": "20%",
+                },
+            ],
             "order": [[0, 'asc']]
         });
 

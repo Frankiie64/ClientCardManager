@@ -219,6 +219,17 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+                if (await _serviceCliente.Exists(x => x.Id == request.Id && x.Activo == false))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente esta incativo",
+                        msj = "El cliente no puede ser actualizado, mientra este inactivo.",
+                    };
+
+                    return Json(error);
+                }
 
                 bool result = await _service.Add(request);
 
@@ -407,6 +418,18 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error esta asociacón de tarjeta no existe",
                         msj = "Asociacón de tarjeta no existe.",
+                    };
+
+                    return Json(error);
+                }
+
+                if (await _serviceCliente.Exists(x => x.Id == request.Id && x.Activo == false))
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error este cliente esta incativo",
+                        msj = "El cliente no puede ser actualizado, mientra este inactivo.",
                     };
 
                     return Json(error);

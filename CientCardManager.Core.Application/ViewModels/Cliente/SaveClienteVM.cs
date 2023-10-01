@@ -11,7 +11,7 @@ namespace CientCardManager.Core.Application.ViewModels.Cliente
         public string Apellido { get; set; }
         [Required(ErrorMessage = "El campo numero de contacto es obligatorio.")]
         public string Telefono { get; set; }
-        
+        public bool Activo { get; set; } = true;
         public string? Ocupacion { get; set; }
     }
 }

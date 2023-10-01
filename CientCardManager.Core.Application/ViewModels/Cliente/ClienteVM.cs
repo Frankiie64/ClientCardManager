@@ -9,6 +9,7 @@ namespace CientCardManager.Core.Application.ViewModels.Cliente
         public string Apellido { get; set; }
         public string Telefono { get; set; }
         public string Ocupacion { get; set; }
+        public bool Activo { get; set; }
         public DateTime Creado { get; set; }
         public ICollection<ClienteTarjetaVM> Tarjetas { get; set; }
     }

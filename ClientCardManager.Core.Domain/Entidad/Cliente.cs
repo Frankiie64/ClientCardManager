@@ -8,6 +8,7 @@ namespace ClientCardManager.Core.Domain.Entidad
         public string Apellido { get; set; }
         public string Telefono { get; set; }
         public string Ocupacion { get; set; }
+        public bool Activo { get; set; } = true;
         public ICollection<ClienteTarjeta> Tarjetas { get; set; }
 
     }
