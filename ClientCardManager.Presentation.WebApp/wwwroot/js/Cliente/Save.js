@@ -4,9 +4,10 @@ $("#modal").on("submit", ".formCliente", function (e) {
     e.preventDefault();
     const submitButton = $(document.activeElement);
 
-    submitButton.find("i").remove();
-    submitButton.prepend("<div>");
-    submitButton.find("div").addClass("spinner-border spinner-border-sm")
+    const iElemet = submitButton.find("i");
+    iElemet.hide();
+
+    submitButton.find("div").attr("hidden",false)
 
     $.ajax({
         url: $(this).attr('action'),
@@ -14,9 +15,11 @@ $("#modal").on("submit", ".formCliente", function (e) {
         data: $(this).serialize(),
         success: function (response) {
 
-            submitButton.find("div").remove();
-            submitButton.prepend("<i>");
-            submitButton.find("i").addClass("fa-solid fa-check");
+            submitButton.find("div").attr("hidden", true)
+            //submitButton.prepend("<i>");
+            //submitButton.find("i").addClass("fa-solid fa-check");
+            iElemet.show();
+
 
             if (!response.ok) {
 

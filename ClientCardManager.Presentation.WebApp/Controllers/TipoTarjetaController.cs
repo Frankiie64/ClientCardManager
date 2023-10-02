@@ -74,6 +74,18 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+                if (request.Nombre.Count() > 30)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es demasiado largo.",
+                    };
+
+                    return Json(error);
+                }
+
                 request.Nombre = request.Nombre.ToUpper();
 
                 bool result = await _service.Add(request);
@@ -154,6 +166,18 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Campo invalido",
                         msj = "El campo Nombre es invalido",
+                    };
+
+                    return Json(error);
+                }
+
+                if (request.Nombre.Count() > 30)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es demasiado largo.",
                     };
 
                     return Json(error);

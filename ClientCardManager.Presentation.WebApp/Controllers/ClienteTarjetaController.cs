@@ -127,6 +127,19 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+                if (request.Banco.Count() > 30)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Banco",
+                        msj = "El campo Banco es demasiado largo.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
                 if (string.IsNullOrWhiteSpace(request.Numero))
                 {
                     var error = new
@@ -202,6 +215,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este cliente no existe",
                         msj = "El cliente es inválido.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);
@@ -214,6 +229,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este tipo de tarjeta no existe",
                         msj = "Tipo tarjeta es inválido.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);
@@ -226,6 +243,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este cliente esta incativo",
                         msj = "El cliente no puede ser actualizado, mientra este inactivo.",
+                        idCliente = request.IdCliente
                     };
 
                     return Json(error);
@@ -318,6 +336,20 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+
+                if (request.Banco.Count() > 30)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Banco",
+                        msj = "El campo Banco es demasiado largo.",
+                        idCliente = request.IdCliente
+                    };
+
+                    return Json(error);
+                }
+
                 if (string.IsNullOrWhiteSpace(request.Numero))
                 {
                     var error = new
@@ -394,6 +426,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este cliente no existe",
                         msj = "El cliente es inválido.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);
@@ -406,6 +440,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este tipo de tarjeta no existe",
                         msj = "Tipo tarjeta es inválido.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);
@@ -418,6 +454,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error esta asociacón de tarjeta no existe",
                         msj = "Asociacón de tarjeta no existe.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);
@@ -430,6 +468,8 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                         ok = false,
                         titulo = "Error este cliente esta incativo",
                         msj = "El cliente no puede ser actualizado, mientra este inactivo.",
+                        idCliente = request.IdCliente
+
                     };
 
                     return Json(error);

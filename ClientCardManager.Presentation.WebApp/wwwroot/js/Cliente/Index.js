@@ -16,8 +16,10 @@
 
     $("#tablaCliente").on("click", ".btnEditar", function (e) {
 
+        let id = $(this).attr("asp-data-id");
+
         $.ajax({
-            url: finder.getAppFile("cliente/ValidarEstado/" + $(this).attr("asp-data-id")),
+            url: finder.getAppFile("cliente/ValidarEstado/" + id),
             type: "GET",
             success: function (response) {
 
@@ -34,7 +36,7 @@
                     return;
                 }
 
-                $("#modal").load("/Cliente/Editar/" + $(this).attr("asp-data-id"), function () {
+                $("#modal").load("/Cliente/Editar/" + id, function () {
                     $("#ClienteModal").modal("show");
                 });
 

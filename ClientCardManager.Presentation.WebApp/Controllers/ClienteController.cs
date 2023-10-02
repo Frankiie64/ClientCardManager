@@ -75,6 +75,7 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
+
                 if (string.IsNullOrWhiteSpace(request.Apellido))
                 {
                     var error = new
@@ -86,7 +87,34 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
 
                     return Json(error);
                 }
-              
+
+
+                if (request.Nombre.Count() > 20)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es demasiado largo.",
+                    };
+
+                    return Json(error);
+                }
+
+
+                if (request.Apellido.Count() > 20)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Apellido",
+                        msj = "El campo apellido es demasiado largo.",
+                    };
+
+                    return Json(error);
+                }
+
+
                 if (!Regex.IsMatch(request.Telefono, @"^\d{3}-\d{3}-\d{4}$"))
                 {
                     var error = new
@@ -102,8 +130,23 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 request.Nombre = request.Nombre.ToUpper();
                 request.Apellido = request.Apellido.ToUpper();
 
-                if (!string.IsNullOrWhiteSpace(request.Ocupacion))                
+                if (!string.IsNullOrWhiteSpace(request.Ocupacion))
+                {
+                    if (request.Ocupacion.Count() > 20)
+                    {
+                        var error = new
+                        {
+                            ok = false,
+                            titulo = "Error campo Ocupacion",
+                            msj = "El campo Ocupacion es demasiado largo.",
+                        };
+
+                        return Json(error);
+                    }
+
                     request.Ocupacion = request.Ocupacion.ToUpper();
+                }
+
                 
                 bool result = await _service.Add(request);
 
@@ -251,7 +294,31 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                     return Json(error);
                 }
 
-               
+                if (request.Nombre.Count() > 20)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Nombre",
+                        msj = "El campo Nombre es demasiado largo.",
+                    };
+
+                    return Json(error);
+                }
+
+
+                if (request.Apellido.Count() > 20)
+                {
+                    var error = new
+                    {
+                        ok = false,
+                        titulo = "Error campo Apellido",
+                        msj = "El campo apellido es demasiado largo.",
+                    };
+
+                    return Json(error);
+                }
+
 
                 if (!Regex.IsMatch(request.Telefono, @"^\d{3}-\d{3}-\d{4}$"))
                 {
@@ -268,8 +335,23 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 request.Nombre = request.Nombre.ToUpper();
                 request.Apellido = request.Apellido.ToUpper();
 
-                if (!string.IsNullOrWhiteSpace(request.Ocupacion))                
+                if (!string.IsNullOrWhiteSpace(request.Ocupacion))
+                {
+                    if (request.Ocupacion.Count() > 20)
+                    {
+                        var error = new
+                        {
+                            ok = false,
+                            titulo = "Error campo Ocupacion",
+                            msj = "El campo Ocupacion es demasiado largo.",
+                        };
+
+                        return Json(error);
+                    }
+
                     request.Ocupacion = request.Ocupacion.ToUpper();
+                }
+
 
 
                 if (!await _service.Exists(x=>x.Id == request.Id))
