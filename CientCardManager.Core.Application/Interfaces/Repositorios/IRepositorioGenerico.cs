@@ -11,6 +11,8 @@ namespace CientCardManager.Core.Application.Interfaces.Repositorios
         Task<T> GetById(int Id, Expression<Func<T, dynamic>> include);
         Task<T> FindWhere(Expression<Func<T, bool>> predicate, Expression<Func<T, dynamic>> include);
         Task<IEnumerable<T>> GetList(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null);
+        Task<IEnumerable<T>> GetListAvance(Func<IQueryable<T>, IQueryable<T>> queryConfigurator);
+        Task<int> GetTotalCount(Func<IQueryable<T>, IQueryable<T>> queryConfigurator=null);
         Task<bool> Add(T entity);
         Task<bool> Delete(int Id);
         Task<bool> DeleteAll();

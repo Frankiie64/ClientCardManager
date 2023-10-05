@@ -20,8 +20,6 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
-
             var tarjetas = await _serviceClienteTarjeta.GetList(x => x.Creado.Date == DateTime.Now.Date);
             var clientes = await _serviceCliente.GetAll();
 

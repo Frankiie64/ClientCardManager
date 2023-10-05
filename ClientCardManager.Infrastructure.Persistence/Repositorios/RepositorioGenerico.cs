@@ -112,6 +112,42 @@ namespace ClientCardManager.Infrastructure.Persistence.Repositorios
             }
 
         }
+        public async Task<IEnumerable<T>> GetListAvance(Func<IQueryable<T>, IQueryable<T>> queryConfigurator)
+        {
+            try
+            {
+                IQueryable<T> query = _db.Set<T>();
+
+                query = queryConfigurator(query);
+
+                return await query.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<int> GetTotalCount(Func<IQueryable<T>, IQueryable<T>> queryConfigurator = null)
+        {
+            try
+            {
+                IQueryable<T> query = _db.Set<T>();
+
+                if (queryConfigurator != null)
+                {
+                    query = queryConfigurator(query);
+                }
+
+                return await query.CountAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public async Task<bool> Exists(Expression<Func<T, bool>> predicate)
         {
             if (predicate != null)

@@ -470,9 +470,32 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ObtenerClientes()
+        public async Task<JsonResult> ObtenerClientes(int start, int length, int draw,string search)
         {
-            var result = await _service.GetList(null,x=>x.Include(y=>y.Tarjetas));
+            int totalRegistros = await _service.GetTotalCount(null);
+
+            int registrosPorPagina = length;
+            int registrosAExcluir = start;
+            int registrosFiltrados = totalRegistros;
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                 registrosFiltrados = await _service.GetTotalCount(x =>
+                 x.Where(y => y.Nombre.Contains(search) || y.Apellido.Contains(search)));
+            }
+            
+            var result = await _service.GetListAvance(x =>
+            {
+                var query = x;
+
+                if (!string.IsNullOrWhiteSpace(search))
+                {
+                    query = query.Where(y => y.Nombre.Contains(search) || y.Apellido.Contains(search));
+                }
+
+                return query.Skip(start).Take(registrosPorPagina);
+            });
+
 
             var response = result.Select(x => new
             {
@@ -484,8 +507,16 @@ namespace ClientCardManager.Presentation.WebApp.Controllers
                 ocupacion = string.IsNullOrWhiteSpace(x.Ocupacion) ? "NO" : x.Ocupacion,
                 tarjetas = x.Tarjetas.Count()
             }).ToList();
-          
-            return Json(new { data = response });            
+
+            return Json(new
+            {
+                draw,
+                recordsTotal = totalRegistros,
+                recordsFiltered = registrosFiltrados,
+                data = response
+            });
         }
+
+
     }
 }

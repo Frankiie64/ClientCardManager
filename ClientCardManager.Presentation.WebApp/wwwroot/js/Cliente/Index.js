@@ -210,8 +210,10 @@
             destroy: true,
             scrollX: false,
             pageLength: 5,
+            serverSide: true,
+            processing : true,
             language: {
-                processing: "Procesando",
+                processing: "Procesando...",
                 search: "Buscar Cliente:",
                 lengthMenu: "Ver _MENU_ Filas",
                 info: "_START_ - _END_ de _TOTAL_ elementos",
@@ -236,8 +238,11 @@
                 "url": finder.getAppFile("Cliente/ObtenerClientes"),
                 "type": "get",
                 "datatype": "json",
-                //"data": data,
                 "async": true,
+                data: function (d) {
+                    d.search = d.search.value;
+                    return d;
+                },
                 error: function (jqXHR, textStatus, errorThrown) {
 
                     console.error("Error en la solicitud:", textStatus, errorThrown);

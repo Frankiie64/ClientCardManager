@@ -2,8 +2,10 @@
 using CientCardManager.Core.Application.Interfaces.Repositorios;
 using CientCardManager.Core.Application.Interfaces.Servicios;
 using ClientCardManager.Core.Domain.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CientCardManager.Core.Application.Servicios
 {
@@ -125,10 +127,27 @@ namespace CientCardManager.Core.Application.Servicios
                 throw e;
             }
         }
+        public async Task<IEnumerable<dto>> GetListAvance(Func<IQueryable<model>, IQueryable<model>> queryConfigurator)
+        {
+            try
+            {
+                var result = await _repository.GetListAvance(queryConfigurator);
+                return _mapper.Map<IEnumerable<dto>>(result);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         public sv MapepVmToSv(dto vm)
         {
             return _mapper.Map<sv>(vm);
+        }
+
+        public async Task<int> GetTotalCount(Func<IQueryable<model>, IQueryable<model>> queryConfigurator)
+        {
+            return await _repository.GetTotalCount(queryConfigurator);
         }
 
         public async Task<bool> Update(sv entity)
